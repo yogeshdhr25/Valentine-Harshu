@@ -2,118 +2,143 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Harshada ❤️</title>
 
 <style>
 body{
-  text-align:center;
-  font-family:Arial;
-  background:linear-gradient(135deg,#ffd6e0,#ffeef2);
-  overflow:hidden;
+margin:0;
+font-family:Arial;
+text-align:center;
+background:linear-gradient(135deg,#ffd6e0,#fff0f5);
+overflow-x:hidden;
 }
 
+h1{margin-top:40px;}
 button{
-  padding:12px 22px;
-  border:none;
-  border-radius:25px;
-  font-size:16px;
-  margin:10px;
-  cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+padding:12px 22px;
+border:none;
+border-radius:25px;
+font-size:16px;
+margin:10px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
 }
 
-#yesBtn{ background:#ff4d6d; color:white; }
-#noBtn{ background:#ccc; position:absolute; }
+#yesBtn{background:#ff4d6d;color:white;}
+#noBtn{background:#ddd;position:absolute;}
 
-#photos{
-  display:none;
-  margin-top:20px;
+.gallery{
+margin-top:20px;
 }
 
-.slide{
-  width:260px;
-  border-radius:15px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.25);
-  display:none;
+.gallery img{
+width:260px;
+border-radius:15px;
+margin:10px;
+box-shadow:0 6px 14px rgba(0,0,0,.2);
+transition:opacity 1s;
+}
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+justify-content:center;
+align-items:center;
+}
+
+.popup-content{
+background:white;
+padding:30px;
+border-radius:20px;
+animation:pop .5s ease;
+}
+
+@keyframes pop{
+from{transform:scale(.5);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+/* floating hearts */
+.heart{
+position:fixed;
+color:#ff4d6d;
+animation:floatUp 5s linear infinite;
 }
 
 @keyframes floatUp{
-  0%{transform:translateY(0); opacity:1;}
-  100%{transform:translateY(-100vh); opacity:0;}
-}
-
-.heart{
-  position:fixed;
-  bottom:-10px;
-  font-size:20px;
-  animation:floatUp 6s linear infinite;
+0%{transform:translateY(100vh);opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
+<audio id="bgMusic" loop>
+<source src="madhubala.mp3" type="audio/mpeg">
+</audio>
+
 <h1>Harshada, will you be my Valentine? ❤️</h1>
-<h3>– Yogesh</h3>
+<p>– Yogesh</p>
 
 <button id="yesBtn">Yes 💖</button>
 <button id="noBtn">No 😅</button>
 
-<audio id="music" src="madhubala.mp3" preload="auto"></audio>
+<div class="gallery">
+<img id="slide" src="IMG_0020.jpeg">
+</div>
 
-<div id="photos">
-<h2>Thank you for being with me, meri Madhubala ❤️</h2>
-
-<img class="slide" src="IMG_0020.jpeg">
-<img class="slide" src="IMG_0007.jpeg">
-<img class="slide" src="3A60E757-9380-428B-B4B3-1FB90EC6B244.jpeg">
-
+<div class="popup" id="popup">
+<div class="popup-content">
+<h2>Thank you for being with me ❤️</h2>
+<p>Meri Madhubala 💕</p>
+</div>
 </div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const photos = document.getElementById("photos");
-const music = document.getElementById("music");
+const photos=[
+"IMG_0020.jpeg",
+"IMG_0007.jpeg",
+"IMG_5654.jpeg",
+"IMG_6043.jpeg",
+"3A60E757-9380-428B-B4B3-1FB90EC6B244.jpeg"
+];
 
-/* moving NO button */
-noBtn.addEventListener("mouseover", function(){
-  noBtn.style.left = Math.random()*window.innerWidth+"px";
-  noBtn.style.top = Math.random()*window.innerHeight+"px";
+let i=0;
+setInterval(()=>{
+i=(i+1)%photos.length;
+document.getElementById("slide").src=photos[i];
+},2500);
+
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+noBtn.style.top=Math.random()*300+"px";
+noBtn.style.left=Math.random()*300+"px";
 });
 
-/* slideshow */
-let slideIndex = 0;
-function showSlides(){
-  const slides = document.getElementsByClassName("slide");
-  for(let i=0;i<slides.length;i++){
-    slides[i].style.display="none";
-  }
-  slideIndex++;
-  if(slideIndex>slides.length){slideIndex=1;}
-  slides[slideIndex-1].style.display="block";
-  setTimeout(showSlides,2000);
+document.getElementById("yesBtn").onclick=()=>{
+document.getElementById("popup").style.display="flex";
+document.getElementById("bgMusic").play();
+};
+
+function createHeart(){
+const heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.className="heart";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),5000);
 }
 
-/* YES click */
-yesBtn.addEventListener("click", function(){
-  photos.style.display="block";
-  music.play();
-  showSlides();
-});
-
-/* floating hearts */
-setInterval(()=>{
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.fontSize=(Math.random()*20+15)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),6000);
-},400);
-
+setInterval(createHeart,500);
 </script>
 
 </body>
 </html>
-

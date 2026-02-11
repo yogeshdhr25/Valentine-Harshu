@@ -14,6 +14,7 @@ overflow-x:hidden;
 }
 
 h1{margin-top:40px;}
+
 button{
 padding:12px 22px;
 border:none;
@@ -29,6 +30,7 @@ box-shadow:0 4px 10px rgba(0,0,0,.2);
 
 .gallery{
 margin-top:20px;
+display:none;
 }
 
 .gallery img{
@@ -36,7 +38,6 @@ width:260px;
 border-radius:15px;
 margin:10px;
 box-shadow:0 6px 14px rgba(0,0,0,.2);
-transition:opacity 1s;
 }
 
 .popup{
@@ -46,9 +47,10 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.5);
 justify-content:center;
 align-items:center;
+z-index:10;
 }
 
 .popup-content{
@@ -63,7 +65,6 @@ from{transform:scale(.5);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
 
-/* floating hearts */
 .heart{
 position:fixed;
 color:#ff4d6d;
@@ -89,7 +90,7 @@ animation:floatUp 5s linear infinite;
 <button id="yesBtn">Yes 💖</button>
 <button id="noBtn">No 😅</button>
 
-<div class="gallery">
+<div class="gallery" id="gallery">
 <img id="slide" src="IMG_0020.jpeg">
 </div>
 
@@ -109,11 +110,18 @@ const photos=[
 "3A60E757-9380-428B-B4B3-1FB90EC6B244.jpeg"
 ];
 
+let slideshowStarted=false;
+
+function startSlideshow(){
+if(slideshowStarted) return;
+slideshowStarted=true;
+
 let i=0;
 setInterval(()=>{
 i=(i+1)%photos.length;
 document.getElementById("slide").src=photos[i];
 },2500);
+}
 
 const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseover",()=>{
@@ -122,8 +130,10 @@ noBtn.style.left=Math.random()*300+"px";
 });
 
 document.getElementById("yesBtn").onclick=()=>{
+document.getElementById("gallery").style.display="block";
 document.getElementById("popup").style.display="flex";
 document.getElementById("bgMusic").play();
+startSlideshow();
 };
 
 function createHeart(){
@@ -133,10 +143,8 @@ heart.className="heart";
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(20+Math.random()*20)+"px";
 document.body.appendChild(heart);
-
 setTimeout(()=>heart.remove(),5000);
 }
-
 setInterval(createHeart,500);
 </script>
 

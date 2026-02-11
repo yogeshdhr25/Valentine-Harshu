@@ -9,25 +9,33 @@
 <button id="noBtn" style="position:absolute;">No 😅</button>
 
 <div id="photos" style="display:none;">
-  <h2>Thank you for being with me, meri Madhubala ❤️</h2>
-  <img src="photo1.jpg" width="250"><br><br>
-  <img src="photo2.jpg" width="250">
-</div>
+<h2>Thank you for being with me, meri Madhubala ❤️</h2>
 
-<audio autoplay loop>
+<img src="IMG_0020.jpeg" width="250"><br><br>
+<img src="IMG_0007.jpeg" width="250"><br><br>
+<img src="3A60E757-9380-428B-B4B3-1FB90EC6B244.jpeg" width="250"><br><br>
+
+<audio id="music" loop>
   <source src="madhubala.mp3" type="audio/mpeg">
 </audio>
 
+</div>
+
 <script>
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",function(){
-  noBtn.style.left=Math.random()*window.innerWidth+"px";
-  noBtn.style.top=Math.random()*window.innerHeight+"px";
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const photos = document.getElementById("photos");
+const music = document.getElementById("music");
+
+noBtn.addEventListener("mouseover", function(){
+  noBtn.style.left = Math.random()*window.innerWidth+"px";
+  noBtn.style.top = Math.random()*window.innerHeight+"px";
 });
 
-document.getElementById("yesBtn").onclick=function(){
-  document.getElementById("photos").style.display="block";
-};
+yesBtn.addEventListener("click", function(){
+  photos.style.display = "block";
+  music.play();
+});
 </script>
 
 </body>
